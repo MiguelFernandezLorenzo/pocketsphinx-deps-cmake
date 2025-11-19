@@ -101,23 +101,20 @@ util/genrand.c
 util/soundfiles.c
   )
 target_include_directories(
-  pocketsphinx PRIVATE
-    # RUTA 1: Directorio Binario (Resuelve 'config.h' y 'sphinx_config.h')
-    # Ubicación: build/_deps/pocketsphinx-build/
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/..>
+ pocketsphinx PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/..>
     
     # RUTA 2: Directorio Fuente (Resuelve includes internos de la carpeta 'src' como "util/ckd_alloc.h")
     # Ubicación: build/_deps/pocketsphinx-src/src/
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+ pocketsphinx PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
     
     # RUTA 3: Directorio de Cabeceras Públicas (Resuelve 'pocketsphinx.h')
     # Ubicación: build/_deps/pocketsphinx-src/include/
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../include>
+ pocketsphinx PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../include>
 
     # RUTA 4: ¡LA CLAVE! Directorio anidado de cabeceras (Resuelve 'pocketsphinx/err.h', etc.)
     # Ubicación: build/_deps/pocketsphinx-src/include/pocketsphinx/
     # Esta línea asegura que MSVC vea el camino completo.
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../include/pocketsphinx>
+  pocketsphinx PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../include/pocketsphinx>
   pocketsphinx PUBLIC ${CMAKE_SOURCE_DIR}/include
   pocketsphinx PUBLIC ${CMAKE_BINARY_DIR}/include
   pocketsphinx INTERFACE ${CMAKE_SOURCE_DIR}/include
