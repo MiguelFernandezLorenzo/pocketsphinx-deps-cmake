@@ -101,8 +101,13 @@ util/genrand.c
 util/soundfiles.c
   )
 target_include_directories(
-  pocketsphinx PRIVATE ${CMAKE_BINARY_DIR}
-  pocketsphinx PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}
+  pocketsphinx PRIVATE
+    # Ruta 1: Donde se genera 'config.h'. Debe ser el directorio binario de este subproyecto.
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
+    
+    # Ruta 2: Donde están las cabeceras públicas (ej., pocketsphinx.h)
+    # y la carpeta 'util' que contiene otras cabeceras (ej., ckd_alloc.h)
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
   pocketsphinx PUBLIC ${CMAKE_SOURCE_DIR}/include
   pocketsphinx PUBLIC ${CMAKE_BINARY_DIR}/include
   pocketsphinx INTERFACE ${CMAKE_SOURCE_DIR}/include
