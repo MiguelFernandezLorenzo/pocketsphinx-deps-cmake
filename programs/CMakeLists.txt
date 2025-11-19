@@ -13,7 +13,9 @@ foreach(PROGRAM ${POCKETSPHINX_PROGRAMS})
   target_include_directories(
     ${PROGRAM} PRIVATE ${CMAKE_SOURCE_DIR}/src
     ${PROGRAM} PRIVATE ${CMAKE_BINARY_DIR})
-  add_dependencies(check ${PROGRAM})
+  if(TARGET check)
+    add_dependencies(check ${POCKETSPHINX_PROGRAMS})
+  endif()
 endforeach()
 # CMake and its lovely flat namespace
 set_target_properties(pocketsphinx_main PROPERTIES OUTPUT_NAME pocketsphinx)
